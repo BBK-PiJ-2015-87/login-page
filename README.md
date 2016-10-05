@@ -16,3 +16,10 @@ http://localhost:8080/h2-console/
 
 Url to connect: jdbc:h2:mem:testdb
 user: sa
+
+To dump a table to a csv file run this command in the console. The file will appear in project directory:
+CALL CSVWRITE('test.csv', 'SELECT * FROM CUSTOMERS');
+
+To dump whole database run:
+
+SCRIPT TO 'mydump.csv'

@@ -2,6 +2,7 @@ package hello.scheduled;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +24,6 @@ public class ScheduledTasks {
     public void reportTime(){
         LOG.info("Current time is {}", date.format(new Date()));
     }
+
 
 }

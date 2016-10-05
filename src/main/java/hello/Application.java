@@ -1,5 +1,6 @@
 package hello;
 
+import hello.scheduled.ScheduledTasks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -9,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.config.ScheduledTask;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,5 +55,14 @@ public class Application implements CommandLineRunner {
                 "SELECT id, first_name, last_name FROM customers WHERE first_name = ?", new Object[] { "Josh" },
                 (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
         ).forEach(customer -> log.info(customer.toString()));
+
+
     }
+
+    @Scheduled(fixedDelay = 30000)
+    public void dumpToCSV() {
+        log.info("^^^^^^^^^^^^DUMPING TO FILE^^^^^^^^^^^^^");
+        jdbcTemplate.execute("CALL CSVWRITE('test.csv', 'SELECT * FROM customers')");
+    }
+
 }
